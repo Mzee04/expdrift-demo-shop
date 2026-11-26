@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: Mzee04/expdrift@b27c733322d2b86a502cc2fb5f6c7e275f0704e3   # pinned commit; update deliberately, never use ./ or a branch
+      - uses: Mzee04/expdrift@d08a8a159f6753b3e4ff33d7741453093b30f2dd   # pinned commit; update deliberately, never use ./ or a branch
         with:
           flagsmith-api-key: ${{ secrets.FLAGSMITH_API_KEY }}
           flagsmith-environment-key: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY }}
@@ -40,7 +40,7 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - uses: Mzee04/expdrift@b27c733322d2b86a502cc2fb5f6c7e275f0704e3   # pinned commit; update deliberately, never use ./ or a branch
+      - uses: Mzee04/expdrift@d08a8a159f6753b3e4ff33d7741453093b30f2dd   # pinned commit; update deliberately, never use ./ or a branch
         with:
           flagsmith-api-key: ${{ secrets.FLAGSMITH_API_KEY }}
           flagsmith-environment-key: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY }}
