@@ -1,0 +1,13 @@
+{
+  "name": "expdrift-demo-shop",
+  "private": true,
+  "type": "module",
+  "description": "Tiny shop with one running Flagsmith experiment. A fixture for ExpDrift's scanner and demo, not a product.",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --check server/index.js && node --check server/experiments.js && node --check public/app.js && echo syntax ok"
+  },
+  "dependencies": {
+    "@flagsmith/nodejs": "^9.1.0"
+  }
+}

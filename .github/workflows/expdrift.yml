@@ -1,0 +1,47 @@
+# Security: this workflow passes your Flagsmith key to the action, so pin the action to a full commit
+# SHA you have reviewed. Never point uses at the local path (that runs the PR's own code with your secrets), and never
+# switch to pull_request_target with a checkout of the PR head. Fork PRs get no secrets and are reported
+# as skipped (unverified).
+name: ExpDrift
+on:
+  pull_request:
+  issue_comment:
+    types: [created]
+permissions:
+  contents: read
+  pull-requests: write
+jobs:
+  expdrift:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: Mzee04/expdrift@b27c733322d2b86a502cc2fb5f6c7e275f0704e3   # pinned commit; update deliberately, never use ./ or a branch
+        with:
+          flagsmith-api-key: ${{ secrets.FLAGSMITH_API_KEY }}
+          flagsmith-environment-key: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY }}
+          flagsmith-project-id: ${{ vars.FLAGSMITH_PROJECT_ID }}
+          # fork-pr-policy: fail   # fail closed: fork PRs (no secrets, nothing verified) fail instead of passing as skipped
+          # Self-hosted Flagsmith:
+          # flagsmith-api-url: https://flagsmith.example.com
+          # flagsmith-dashboard-url: https://flagsmith.example.com
+
+  # `/expdrift apply` opens a separate fix PR, so it needs write access. It runs only for PR comments
+  # that start with /expdrift, and ExpDrift itself checks the commenter has write/maintain/admin.
+  expdrift-apply:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/expdrift apply')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: Mzee04/expdrift@b27c733322d2b86a502cc2fb5f6c7e275f0704e3   # pinned commit; update deliberately, never use ./ or a branch
+        with:
+          flagsmith-api-key: ${{ secrets.FLAGSMITH_API_KEY }}
+          flagsmith-environment-key: ${{ secrets.FLAGSMITH_ENVIRONMENT_KEY }}
+          flagsmith-project-id: ${{ vars.FLAGSMITH_PROJECT_ID }}

@@ -1,0 +1,7 @@
+# ExpDrift repo config (optional). Globs are relative to the repo root.
+include:
+  - "server/**"
+  - "public/**"
+aliases:
+  trackEvent: []
+ignore: []
