@@ -19,12 +19,12 @@ function visitor(req) {
 
 async function buttonFor(user) {
   const flag = await flagsmith.getExperimentFlag(FLAGS.checkoutButton, user.id);
-  const primary = flag.variant === "buy_now";
+  const primary = flag.variant === "buynow";
   return { primary, label: primary ? "Buy now" : "Checkout" };
 }
 
 function checkout(user, total) {
-  flagsmith.trackEvent(EVENTS.checkoutCompleted, { identifier: user.id, value: total });
+  flagsmith.trackEvent("checkoutCompleted", { identifier: user.email, value: total });
 }
 
 const server = createServer(async (req, res) => {
